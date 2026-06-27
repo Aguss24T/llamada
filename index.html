@@ -432,19 +432,15 @@ escapeButton();
 });
 
 accept.addEventListener("click", () => {
+
     const msg = encodeURIComponent("Hola mi amor ❤️ Contesté tu llamada.");
     const url = `https://wa.me/5493513363437?text=${msg}`;
     window.location.href = url;
+
+    document.querySelector(".container").style.display="none";
+    accepted.style.display="flex";
+    createHearts();
 });
-
-setTimeout(()=>{
-
-document.querySelector(".container").style.display="none";
-
-accepted.style.display="flex";
-createHearts();
-
-},700);
 
 function createHearts(){
 
