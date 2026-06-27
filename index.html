@@ -62,7 +62,9 @@ align-items:center;
 padding:60px 20px;
 }
 
-.top{text-align:center;}
+.top{
+text-align:center;
+}
 
 .top h1{font-size:42px;}
 .top p{font-size:22px;color:#bfbfbf;margin-top:10px;}
@@ -133,11 +135,11 @@ justify-content:center;
 align-items:center;
 flex-direction:column;
 z-index:20;
+text-align:center;
 }
 
 #accepted h2{
 font-size:42px;
-text-align:center;
 }
 
 #accepted p{
@@ -185,7 +187,6 @@ animation:rise linear forwards;
     <div class="buttons">
 
         <div id="accept" class="callBtn">📞</div>
-
         <div id="decline" class="callBtn">📵</div>
 
     </div>
@@ -194,7 +195,7 @@ animation:rise linear forwards;
 
 <script>
 
-// ===== partículas =====
+// partículas
 for(let i=0;i<35;i++){
     let p=document.createElement("div");
     p.className="particle";
@@ -203,14 +204,13 @@ for(let i=0;i<35;i++){
     document.body.appendChild(p);
 }
 
-// ===== elementos =====
 const accept=document.getElementById("accept");
 const decline=document.getElementById("decline");
 const accepted=document.getElementById("accepted");
 
 let answered=false;
 
-// ===== botón escapar =====
+// botón escapar
 function escapeButton(){
     const area=document.querySelector(".buttons");
 
@@ -224,17 +224,18 @@ function escapeButton(){
 }
 
 decline.addEventListener("mouseenter",escapeButton);
-
-decline.addEventListener("touchstart",(e)=>{
+decline.addEventListener("touchend",(e)=>{
     e.preventDefault();
     escapeButton();
-});
+},{passive:false});
 
-// ===== aceptar =====
-function handleAccept(){
+// aceptar (BLINDADO)
+function handleAccept(e){
 
     if(answered) return;
     answered=true;
+
+    if(e) e.preventDefault();
 
     const msg = encodeURIComponent("Hola mi amor ❤️ Contesté tu llamada.");
     const url = `https://wa.me/5493513363437?text=${msg}`;
@@ -246,17 +247,13 @@ function handleAccept(){
 
     setTimeout(()=>{
         window.location.href = url;
-    },300);
+    },400);
 }
 
-// evita doble toque en mobile
 accept.addEventListener("click", handleAccept);
-accept.addEventListener("touchstart", (e)=>{
-    e.preventDefault();
-    handleAccept();
-});
+accept.addEventListener("touchend", handleAccept,{passive:false});
 
-// ===== corazones =====
+// corazones
 function createHearts(){
     setInterval(()=>{
         let heart=document.createElement("div");
