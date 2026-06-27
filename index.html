@@ -194,7 +194,12 @@ animation:rise linear forwards;
 </div>
 
 <script>
+if (window.__alreadyLoaded) {
+    throw new Error("Script duplicado bloqueado");
+}
+window.__alreadyLoaded = true;
 
+console.log("SCRIPT CARGADO UNA SOLA VEZ");
 // partículas
 for(let i=0;i<35;i++){
     let p=document.createElement("div");
